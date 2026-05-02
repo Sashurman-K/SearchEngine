@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.10)
+project(SearchEngineProject)
+
+# Требование C++17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Указываем директорию с заголовочными файлами
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Собираем все исходники
+file(GLOB SOURCES "src/*.cpp")
+
+# Объявляем исполняемый файл
+add_executable(target_exec ${SOURCES})
