@@ -1,3 +1,3 @@
-IndexerTests 0 0
+IndexerTests 1 0.0119631
+SearchTests 1 0.0118068
 ---
-IndexerTests

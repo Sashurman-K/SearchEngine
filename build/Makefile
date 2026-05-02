@@ -152,77 +152,162 @@ test_indexer/fast:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_indexer.dir/build.make tests/CMakeFiles/test_indexer.dir/build
 .PHONY : test_indexer/fast
 
-src/1main.o: src/1main.cpp.o
-.PHONY : src/1main.o
+#=============================================================================
+# Target rules for targets named test_search
+
+# Build rule for target.
+test_search: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_search
+.PHONY : test_search
+
+# fast build rule for target.
+test_search/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_search.dir/build.make tests/CMakeFiles/test_search.dir/build
+.PHONY : test_search/fast
+
+src/Indexing/Indexer.o: src/Indexing/Indexer.cpp.o
+.PHONY : src/Indexing/Indexer.o
 
 # target to build an object file
-src/1main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/1main.cpp.o
-.PHONY : src/1main.cpp.o
+src/Indexing/Indexer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Indexing/Indexer.cpp.o
+.PHONY : src/Indexing/Indexer.cpp.o
 
-src/1main.i: src/1main.cpp.i
-.PHONY : src/1main.i
+src/Indexing/Indexer.i: src/Indexing/Indexer.cpp.i
+.PHONY : src/Indexing/Indexer.i
 
 # target to preprocess a source file
-src/1main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/1main.cpp.i
-.PHONY : src/1main.cpp.i
+src/Indexing/Indexer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Indexing/Indexer.cpp.i
+.PHONY : src/Indexing/Indexer.cpp.i
 
-src/1main.s: src/1main.cpp.s
-.PHONY : src/1main.s
+src/Indexing/Indexer.s: src/Indexing/Indexer.cpp.s
+.PHONY : src/Indexing/Indexer.s
 
 # target to generate assembly for a file
-src/1main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/1main.cpp.s
-.PHONY : src/1main.cpp.s
+src/Indexing/Indexer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Indexing/Indexer.cpp.s
+.PHONY : src/Indexing/Indexer.cpp.s
 
-src/Indexer.o: src/Indexer.cpp.o
-.PHONY : src/Indexer.o
+src/Indexing/InvertedIndex.o: src/Indexing/InvertedIndex.cpp.o
+.PHONY : src/Indexing/InvertedIndex.o
 
 # target to build an object file
-src/Indexer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Indexer.cpp.o
-.PHONY : src/Indexer.cpp.o
+src/Indexing/InvertedIndex.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Indexing/InvertedIndex.cpp.o
+.PHONY : src/Indexing/InvertedIndex.cpp.o
 
-src/Indexer.i: src/Indexer.cpp.i
-.PHONY : src/Indexer.i
+src/Indexing/InvertedIndex.i: src/Indexing/InvertedIndex.cpp.i
+.PHONY : src/Indexing/InvertedIndex.i
 
 # target to preprocess a source file
-src/Indexer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Indexer.cpp.i
-.PHONY : src/Indexer.cpp.i
+src/Indexing/InvertedIndex.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Indexing/InvertedIndex.cpp.i
+.PHONY : src/Indexing/InvertedIndex.cpp.i
 
-src/Indexer.s: src/Indexer.cpp.s
-.PHONY : src/Indexer.s
+src/Indexing/InvertedIndex.s: src/Indexing/InvertedIndex.cpp.s
+.PHONY : src/Indexing/InvertedIndex.s
 
 # target to generate assembly for a file
-src/Indexer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Indexer.cpp.s
-.PHONY : src/Indexer.cpp.s
+src/Indexing/InvertedIndex.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Indexing/InvertedIndex.cpp.s
+.PHONY : src/Indexing/InvertedIndex.cpp.s
 
-src/InvertedIndex.o: src/InvertedIndex.cpp.o
-.PHONY : src/InvertedIndex.o
+src/QueryParser.o: src/QueryParser.cpp.o
+.PHONY : src/QueryParser.o
 
 # target to build an object file
-src/InvertedIndex.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/InvertedIndex.cpp.o
-.PHONY : src/InvertedIndex.cpp.o
+src/QueryParser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/QueryParser.cpp.o
+.PHONY : src/QueryParser.cpp.o
 
-src/InvertedIndex.i: src/InvertedIndex.cpp.i
-.PHONY : src/InvertedIndex.i
+src/QueryParser.i: src/QueryParser.cpp.i
+.PHONY : src/QueryParser.i
 
 # target to preprocess a source file
-src/InvertedIndex.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/InvertedIndex.cpp.i
-.PHONY : src/InvertedIndex.cpp.i
+src/QueryParser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/QueryParser.cpp.i
+.PHONY : src/QueryParser.cpp.i
 
-src/InvertedIndex.s: src/InvertedIndex.cpp.s
-.PHONY : src/InvertedIndex.s
+src/QueryParser.s: src/QueryParser.cpp.s
+.PHONY : src/QueryParser.s
 
 # target to generate assembly for a file
-src/InvertedIndex.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/InvertedIndex.cpp.s
-.PHONY : src/InvertedIndex.cpp.s
+src/QueryParser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/QueryParser.cpp.s
+.PHONY : src/QueryParser.cpp.s
+
+src/Ranking/BM25Strategy.o: src/Ranking/BM25Strategy.cpp.o
+.PHONY : src/Ranking/BM25Strategy.o
+
+# target to build an object file
+src/Ranking/BM25Strategy.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Ranking/BM25Strategy.cpp.o
+.PHONY : src/Ranking/BM25Strategy.cpp.o
+
+src/Ranking/BM25Strategy.i: src/Ranking/BM25Strategy.cpp.i
+.PHONY : src/Ranking/BM25Strategy.i
+
+# target to preprocess a source file
+src/Ranking/BM25Strategy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Ranking/BM25Strategy.cpp.i
+.PHONY : src/Ranking/BM25Strategy.cpp.i
+
+src/Ranking/BM25Strategy.s: src/Ranking/BM25Strategy.cpp.s
+.PHONY : src/Ranking/BM25Strategy.s
+
+# target to generate assembly for a file
+src/Ranking/BM25Strategy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Ranking/BM25Strategy.cpp.s
+.PHONY : src/Ranking/BM25Strategy.cpp.s
+
+src/Ranking/Ranker.o: src/Ranking/Ranker.cpp.o
+.PHONY : src/Ranking/Ranker.o
+
+# target to build an object file
+src/Ranking/Ranker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Ranking/Ranker.cpp.o
+.PHONY : src/Ranking/Ranker.cpp.o
+
+src/Ranking/Ranker.i: src/Ranking/Ranker.cpp.i
+.PHONY : src/Ranking/Ranker.i
+
+# target to preprocess a source file
+src/Ranking/Ranker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Ranking/Ranker.cpp.i
+.PHONY : src/Ranking/Ranker.cpp.i
+
+src/Ranking/Ranker.s: src/Ranking/Ranker.cpp.s
+.PHONY : src/Ranking/Ranker.s
+
+# target to generate assembly for a file
+src/Ranking/Ranker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Ranking/Ranker.cpp.s
+.PHONY : src/Ranking/Ranker.cpp.s
+
+src/Ranking/TFIDFStrategy.o: src/Ranking/TFIDFStrategy.cpp.o
+.PHONY : src/Ranking/TFIDFStrategy.o
+
+# target to build an object file
+src/Ranking/TFIDFStrategy.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Ranking/TFIDFStrategy.cpp.o
+.PHONY : src/Ranking/TFIDFStrategy.cpp.o
+
+src/Ranking/TFIDFStrategy.i: src/Ranking/TFIDFStrategy.cpp.i
+.PHONY : src/Ranking/TFIDFStrategy.i
+
+# target to preprocess a source file
+src/Ranking/TFIDFStrategy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Ranking/TFIDFStrategy.cpp.i
+.PHONY : src/Ranking/TFIDFStrategy.cpp.i
+
+src/Ranking/TFIDFStrategy.s: src/Ranking/TFIDFStrategy.cpp.s
+.PHONY : src/Ranking/TFIDFStrategy.s
+
+# target to generate assembly for a file
+src/Ranking/TFIDFStrategy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/search_engine_lib.dir/build.make CMakeFiles/search_engine_lib.dir/src/Ranking/TFIDFStrategy.cpp.s
+.PHONY : src/Ranking/TFIDFStrategy.cpp.s
 
 src/SearchEngine.o: src/SearchEngine.cpp.o
 .PHONY : src/SearchEngine.o
@@ -403,15 +488,25 @@ help:
 	@echo "... test"
 	@echo "... search_engine_lib"
 	@echo "... test_indexer"
-	@echo "... src/1main.o"
-	@echo "... src/1main.i"
-	@echo "... src/1main.s"
-	@echo "... src/Indexer.o"
-	@echo "... src/Indexer.i"
-	@echo "... src/Indexer.s"
-	@echo "... src/InvertedIndex.o"
-	@echo "... src/InvertedIndex.i"
-	@echo "... src/InvertedIndex.s"
+	@echo "... test_search"
+	@echo "... src/Indexing/Indexer.o"
+	@echo "... src/Indexing/Indexer.i"
+	@echo "... src/Indexing/Indexer.s"
+	@echo "... src/Indexing/InvertedIndex.o"
+	@echo "... src/Indexing/InvertedIndex.i"
+	@echo "... src/Indexing/InvertedIndex.s"
+	@echo "... src/QueryParser.o"
+	@echo "... src/QueryParser.i"
+	@echo "... src/QueryParser.s"
+	@echo "... src/Ranking/BM25Strategy.o"
+	@echo "... src/Ranking/BM25Strategy.i"
+	@echo "... src/Ranking/BM25Strategy.s"
+	@echo "... src/Ranking/Ranker.o"
+	@echo "... src/Ranking/Ranker.i"
+	@echo "... src/Ranking/Ranker.s"
+	@echo "... src/Ranking/TFIDFStrategy.o"
+	@echo "... src/Ranking/TFIDFStrategy.i"
+	@echo "... src/Ranking/TFIDFStrategy.s"
 	@echo "... src/SearchEngine.o"
 	@echo "... src/SearchEngine.i"
 	@echo "... src/SearchEngine.s"

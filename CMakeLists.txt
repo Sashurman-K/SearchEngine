@@ -12,13 +12,44 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/include/Ranking
 )
 
-# Ищем все .cpp файлы рекурсивно в src/
-file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+# Исходники библиотеки (без main.cpp)
+set(LIB_SOURCES
+    src/Indexing/Indexer.cpp
+    src/Indexing/InvertedIndex.cpp
+    src/QueryParser.cpp
+    src/SearchEngine.cpp
+    src/Ranking/TFIDFStrategy.cpp
+    src/Ranking/BM25Strategy.cpp
+    src/Ranking/Ranker.cpp
+    src/TextProcessing/BaseTextProcessor.cpp
+    src/TextProcessing/TextDecorator.cpp
+    src/TextProcessing/StopWordsDecorator.cpp
+    src/TextProcessing/StopWordsConfig.cpp
+    src/TextProcessing/Stemmer.cpp
+    src/TextProcessing/StemmingDecorator.cpp
+)
 
-# Основная библиотека
-add_library(search_engine_lib ${SOURCES})
+# Библиотека
+add_library(search_engine_lib ${LIB_SOURCES})
 
-# Исполняемый файл (если есть main.cpp)
+# Линковка libstemmer (если установлена)
+find_library(STEMMER_LIB stemmer)
+if(STEMMER_LIB)
+    target_link_libraries(search_engine_lib PUBLIC ${STEMMER_LIB})
+    message(STATUS "Found libstemmer: ${STEMMER_LIB}")
+else()
+    message(WARNING "libstemmer not found — stemming will not work")
+endif()
+
+# nholmann/json (header-only)
+find_package(nlohmann_json QUIET)
+if(nlohmann_json_FOUND)
+    message(STATUS "Found nlohmann_json")
+else()
+    message(WARNING "nlohmann_json not found — stopwords config will not work")
+endif()
+
+# Исполняемый файл (опционально, если main.cpp дозреет)
 if(EXISTS ${CMAKE_SOURCE_DIR}/src/main.cpp)
     add_executable(search_engine src/main.cpp)
     target_link_libraries(search_engine PRIVATE search_engine_lib)
@@ -31,5 +62,3 @@ if(BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
-
-target_link_libraries(search_engine_lib PUBLIC stemmer)

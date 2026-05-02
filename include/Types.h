@@ -12,7 +12,7 @@ struct Document {
 
 struct Result {
     Document doc;
-    int score;
+    double score;
 };
 
 struct Posting {

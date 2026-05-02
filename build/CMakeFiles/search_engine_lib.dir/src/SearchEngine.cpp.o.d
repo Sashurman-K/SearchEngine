@@ -160,8 +160,8 @@ CMakeFiles/search_engine_lib.dir/src/SearchEngine.cpp.o: \
  /usr/include/c++/11/bits/enable_special_members.h \
  /home/sashurman/search_engine/include/Types.h \
  /home/sashurman/search_engine/include/QueryParser.h \
- /home/sashurman/search_engine/include/Ranker.h \
- /home/sashurman/search_engine/include/Ranking.h \
+ /home/sashurman/search_engine/include/Ranking/Ranker.h \
+ /home/sashurman/search_engine/include/Ranking/IRankingStrategy.h \
  /usr/include/c++/11/memory \
  /usr/include/c++/11/bits/stl_raw_storage_iter.h \
  /usr/include/c++/11/bits/align.h /usr/include/c++/11/bit \

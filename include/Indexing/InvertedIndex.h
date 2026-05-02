@@ -10,7 +10,7 @@ class InvertedIndex {
 private:
     std::map<std::string, std::vector<Posting>> index;
     std::map<int, Document> documents;
-
+    std::map<int, int> docLengths;
 public:
     // Термы
     void addTerm(const std::string& term, int docId, int pos);
@@ -22,6 +22,9 @@ public:
     const std::map<int, Document>& getDocuments() const;
     size_t getDocumentCount() const;
 
-
+    double getAvgDocLength() const;
+    void setDocLength(int docId, int length);
+    int getDocLength(int docId) const;
+    
     void clear();
 };

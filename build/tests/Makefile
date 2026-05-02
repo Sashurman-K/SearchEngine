@@ -140,6 +140,20 @@ test_indexer/fast:
 	cd /home/sashurman/search_engine/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_indexer.dir/build.make tests/CMakeFiles/test_indexer.dir/build
 .PHONY : test_indexer/fast
 
+# Convenience name for target.
+tests/CMakeFiles/test_search.dir/rule:
+	cd /home/sashurman/search_engine/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/test_search.dir/rule
+.PHONY : tests/CMakeFiles/test_search.dir/rule
+
+# Convenience name for target.
+test_search: tests/CMakeFiles/test_search.dir/rule
+.PHONY : test_search
+
+# fast build rule for target.
+test_search/fast:
+	cd /home/sashurman/search_engine/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_search.dir/build.make tests/CMakeFiles/test_search.dir/build
+.PHONY : test_search/fast
+
 test_indexer.o: test_indexer.cpp.o
 .PHONY : test_indexer.o
 
@@ -164,6 +178,30 @@ test_indexer.cpp.s:
 	cd /home/sashurman/search_engine/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_indexer.dir/build.make tests/CMakeFiles/test_indexer.dir/test_indexer.cpp.s
 .PHONY : test_indexer.cpp.s
 
+test_search.o: test_search.cpp.o
+.PHONY : test_search.o
+
+# target to build an object file
+test_search.cpp.o:
+	cd /home/sashurman/search_engine/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_search.dir/build.make tests/CMakeFiles/test_search.dir/test_search.cpp.o
+.PHONY : test_search.cpp.o
+
+test_search.i: test_search.cpp.i
+.PHONY : test_search.i
+
+# target to preprocess a source file
+test_search.cpp.i:
+	cd /home/sashurman/search_engine/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_search.dir/build.make tests/CMakeFiles/test_search.dir/test_search.cpp.i
+.PHONY : test_search.cpp.i
+
+test_search.s: test_search.cpp.s
+.PHONY : test_search.s
+
+# target to generate assembly for a file
+test_search.cpp.s:
+	cd /home/sashurman/search_engine/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_search.dir/build.make tests/CMakeFiles/test_search.dir/test_search.cpp.s
+.PHONY : test_search.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -174,9 +212,13 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... test_indexer"
+	@echo "... test_search"
 	@echo "... test_indexer.o"
 	@echo "... test_indexer.i"
 	@echo "... test_indexer.s"
+	@echo "... test_search.o"
+	@echo "... test_search.i"
+	@echo "... test_search.s"
 .PHONY : help
 
 

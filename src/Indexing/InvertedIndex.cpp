@@ -46,7 +46,29 @@ const std::map<int, Document>& InvertedIndex::getDocuments() const {
 size_t InvertedIndex::getDocumentCount() const {
     return documents.size();
 }
+void InvertedIndex::setDocLength(int docId, int length) {
+    docLengths[docId] = length;
+}
 
+int InvertedIndex::getDocLength(int docId) const {
+    auto it = docLengths.find(docId);
+    if (it != docLengths.end()) {
+        return it->second;
+    }
+    return 0;
+}
+
+double InvertedIndex::getAvgDocLength() const {
+    if (docLengths.empty()) {
+        return 1.0;  
+    }
+
+    long long total = 0;
+    for (const auto& [docId, len] : docLengths) {
+        total += len;
+    }
+    return static_cast<double>(total) / docLengths.size();
+}
 void InvertedIndex::clear() {
     index.clear();
     documents.clear();

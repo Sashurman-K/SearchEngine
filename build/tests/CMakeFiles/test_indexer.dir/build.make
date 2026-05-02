@@ -93,7 +93,7 @@ test_indexer_EXTERNAL_OBJECTS =
 tests/test_indexer: tests/CMakeFiles/test_indexer.dir/test_indexer.cpp.o
 tests/test_indexer: tests/CMakeFiles/test_indexer.dir/build.make
 tests/test_indexer: libsearch_engine_lib.a
-tests/test_indexer: libsearch_engine_lib.a
+tests/test_indexer: /usr/lib/x86_64-linux-gnu/libstemmer.so
 tests/test_indexer: tests/CMakeFiles/test_indexer.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/sashurman/search_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_indexer"
 	cd /home/sashurman/search_engine/build/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_indexer.dir/link.txt --verbose=$(VERBOSE)

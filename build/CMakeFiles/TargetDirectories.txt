@@ -3,6 +3,7 @@
 /home/sashurman/search_engine/build/CMakeFiles/edit_cache.dir
 /home/sashurman/search_engine/build/CMakeFiles/rebuild_cache.dir
 /home/sashurman/search_engine/build/tests/CMakeFiles/test_indexer.dir
+/home/sashurman/search_engine/build/tests/CMakeFiles/test_search.dir
 /home/sashurman/search_engine/build/tests/CMakeFiles/test.dir
 /home/sashurman/search_engine/build/tests/CMakeFiles/edit_cache.dir
 /home/sashurman/search_engine/build/tests/CMakeFiles/rebuild_cache.dir

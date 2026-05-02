@@ -90,6 +90,7 @@ void Indexer::indexFile(const fs::path& filePath) {
     if (processor) {
         tokens = processor->process(tokens);
     }
+    index.setDocLength(docId, tokens.size());
 
     // Добавляем токены в инвертированный индекс с позициями
     for (int pos = 0; pos < static_cast<int>(tokens.size()); ++pos) {

@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/test_search.dir/test_search.cpp.o -o test_search  ../libsearch_engine_lib.a /usr/lib/x86_64-linux-gnu/libstemmer.so 
