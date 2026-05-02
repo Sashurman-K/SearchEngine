@@ -1,0 +1,25 @@
+Start testing: May 02 14:54 MSK
+----------------------------------------------------------
+1/1 Testing: IndexerTests
+1/1 Test: IndexerTests
+Command: "/home/sashurman/search_engine/build/tests/test_indexer"
+Directory: /home/sashurman/search_engine/build/tests
+"IndexerTests" start time: May 02 14:54 MSK
+Output:
+----------------------------------------------------------
+=== Indexer Tests ===
+
+[TEST] Basic indexing...
+Indexing directory: /tmp/search_test
+  Indexing file: "/tmp/search_test/doc2.txt"
+  Indexing file: "/tmp/search_test/doc1.txt"
+test_indexer: /home/sashurman/search_engine/tests/test_indexer.cpp:105: void testBasicIndexing(): Assertion `postings.size() == 2' failed.
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Failed.
+"IndexerTests" end time: May 02 14:54 MSK
+"IndexerTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: May 02 14:54 MSK
