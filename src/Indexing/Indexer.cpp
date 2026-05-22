@@ -109,23 +109,30 @@ void Indexer::indexFile(const fs::path& filePath) {
     index.addDocument(docId, doc);
 }
 
-std::vector<std::string> Indexer::tokenize(const std::string& text) {
+std::vector<std::string> Indexer::tokenize(const std::string& text) const {
     std::vector<std::string> tokens;
-    std::string currentToken;
+    std::string current;
 
-    for (char c : text) {
-        if (std::isalnum(static_cast<unsigned char>(c))) {
-            currentToken += static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
-        } else {
-            if (!currentToken.empty()) {
-                tokens.push_back(currentToken);
-                currentToken.clear();
+    for (unsigned char c : text) {
+        // ASCII: буквы и цифры
+        if (std::isalnum(c)) {
+            current += std::tolower(c);
+        }
+        // UTF-8 continuations (0x80-0xBF) — добавляем к текущему токену
+        else if (c >= 0x80) {
+            current += c;
+        }
+        // Разделители
+        else {
+            if (!current.empty()) {
+                tokens.push_back(current);
+                current.clear();
             }
         }
     }
 
-    if (!currentToken.empty()) {
-        tokens.push_back(currentToken);
+    if (!current.empty()) {
+        tokens.push_back(current);
     }
 
     return tokens;

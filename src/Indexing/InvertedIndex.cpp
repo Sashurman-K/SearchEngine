@@ -60,7 +60,7 @@ int InvertedIndex::getDocLength(int docId) const {
 
 double InvertedIndex::getAvgDocLength() const {
     if (docLengths.empty()) {
-        return 1.0;  
+        return 1.0;
     }
 
     long long total = 0;
@@ -72,4 +72,20 @@ double InvertedIndex::getAvgDocLength() const {
 void InvertedIndex::clear() {
     index.clear();
     documents.clear();
+    docLengths.clear();
+}
+
+InvertedIndex::InvertedIndex(const InvertedIndex& other)
+    : index(other.index)
+    , documents(other.documents)
+    , docLengths(other.docLengths)
+{}
+
+InvertedIndex& InvertedIndex::operator=(const InvertedIndex& other) {
+    if (this != &other) {
+        index = other.index;
+        documents = other.documents;
+        docLengths = other.docLengths;
+    }
+    return *this;
 }

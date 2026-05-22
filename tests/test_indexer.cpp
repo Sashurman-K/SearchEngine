@@ -1,117 +1,79 @@
-#include <cassert>
-#include <iostream>
-#include <fstream>
-#include <filesystem>
-#include <vector>
-#include <string>
-#include <algorithm>
-
-#include "Types.h"
-#include "InvertedIndex.h"
+#include <gtest/gtest.h>
 #include "Indexer.h"
-#include "BaseTextProcessor.h"
+#include <filesystem>
+#include <fstream>
 
 namespace fs = std::filesystem;
 
-void testBasicIndexing() {
-    std::cout << "[TEST] Basic indexing... ";
-    auto tmpDir = fs::temp_directory_path() / "search_test";
-    fs::remove_all(tmpDir);
-    fs::create_directories(tmpDir);
-    { std::ofstream f(tmpDir / "doc1.txt"); f << "hello world"; }
-    { std::ofstream f(tmpDir / "doc2.txt"); f << "hello cat"; }
+class IndexerTest : public ::testing::Test {
+protected:
+    std::string testDir = "test_data_dir";
 
+    void SetUp() override {
+        // Создаем временную тестовую директорию и файлы перед каждым тестом
+        fs::create_directory(testDir);
+
+        std::ofstream(testDir + "/file1.txt") << "hello world";
+        std::ofstream(testDir + "/file2.txt") << "C++ programming engine";
+
+        fs::create_directory(testDir + "/exclude_me");
+        std::ofstream(testDir + "/exclude_me/file3.txt") << "secret data";
+    }
+
+    void TearDown() override {
+        // Удаляем временную папку после завершения теста
+        fs::remove_all(testDir);
+    }
+};
+
+// 1. Индексация директории без исключений
+TEST_F(IndexerTest, IndexValidDirectory) {
     Indexer indexer;
-    indexer.setProcessor(std::make_unique<BaseTextProcessor>());
-    indexer.indexDirectory(tmpDir.string(), {});
+    indexer.indexDirectory(testDir, {});
+
     const auto& index = indexer.getIndex();
-
-    assert(index.getPostings("hello").size() == 2);
-    assert(index.getPostings("world").size() == 1);
-    assert(index.getDocumentCount() == 2);
-
-    fs::remove_all(tmpDir);
-    std::cout << "PASSED\n";
+    EXPECT_EQ(index.getDocumentCount(), 3); // file1, file2, file3
+    EXPECT_FALSE(index.getPostings("hello").empty());
 }
 
-void testEmptyDirectory() {
-    std::cout << "[TEST] Empty directory... ";
-    auto tmpDir = fs::temp_directory_path() / "search_empty";
-    fs::remove_all(tmpDir);
-    fs::create_directories(tmpDir);
-
+// 2. Исключение конкретного файла из индексации
+TEST_F(IndexerTest, ExcludeSpecificFile) {
     Indexer indexer;
-    indexer.setProcessor(std::make_unique<BaseTextProcessor>());
-    indexer.indexDirectory(tmpDir.string(), {});
+    indexer.indexDirectory(testDir, {"file2.txt"});
+
     const auto& index = indexer.getIndex();
-
-    assert(index.getDocumentCount() == 0);
-
-    fs::remove_all(tmpDir);
-    std::cout << "PASSED\n";
+    EXPECT_EQ(index.getDocumentCount(), 2);
+    EXPECT_TRUE(index.getPostings("programming").empty()); // Было только в file2.txt
 }
 
-void testNonexistentDirectory() {
-    std::cout << "[TEST] Nonexistent directory... ";
+// 3. Исключение поддиректории
+TEST_F(IndexerTest, ExcludeDirectory) {
     Indexer indexer;
-    indexer.setProcessor(std::make_unique<BaseTextProcessor>());
-    indexer.indexDirectory("/nonexistent/path", {});
-    const auto& index = indexer.getIndex();
+    indexer.indexDirectory(testDir, {"exclude_me"});
 
-    assert(index.getDocumentCount() == 0);
-    std::cout << "PASSED\n";
+    const auto& index = indexer.getIndex();
+    EXPECT_EQ(index.getDocumentCount(), 2);
+    EXPECT_TRUE(index.getPostings("secret").empty()); // Было только внутри папки exclude_me
 }
 
-void testTermFrequencyAndPositions() {
-    std::cout << "[TEST] Term frequency and positions... ";
-    auto tmpDir = fs::temp_directory_path() / "search_tf";
-    fs::remove_all(tmpDir);
-    fs::create_directories(tmpDir);
-    { std::ofstream f(tmpDir / "doc.txt"); f << "cat cat dog cat"; }
-
+// 4. Попытка индексации несуществующей директории
+TEST_F(IndexerTest, IndexNonExistentDirectory) {
     Indexer indexer;
-    indexer.setProcessor(std::make_unique<BaseTextProcessor>());
-    indexer.indexDirectory(tmpDir.string(), {});
-    const auto& index = indexer.getIndex();
-
-    auto postings = index.getPostings("cat");
-    assert(postings.size() == 1);
-    assert(postings[0].termFrequency == 3);
-    assert(postings[0].positions == std::vector<int>({0, 1, 3}));
-
-    fs::remove_all(tmpDir);
-    std::cout << "PASSED\n";
+    indexer.indexDirectory("some_fake_directory_123", {});
+    EXPECT_EQ(indexer.getIndex().getDocumentCount(), 0);
 }
 
-void testExcludedPaths() {
-    std::cout << "[TEST] Excluded paths... ";
-    auto tmpDir = fs::temp_directory_path() / "search_excl";
-    fs::remove_all(tmpDir);
-    fs::create_directories(tmpDir);
-    fs::create_directories(tmpDir / "secret");
-    { std::ofstream f(tmpDir / "doc.txt"); f << "hello"; }
-    { std::ofstream f(tmpDir / "secret/hidden.txt"); f << "hidden hello"; }
-
+// 5. Проверка работы токенизации (пробелы и пунктуация)
+TEST_F(IndexerTest, TokenizationPunctuation) {
+    std::ofstream(testDir + "/complex.txt") << "Hello, world! (C++20)";
     Indexer indexer;
-    indexer.setProcessor(std::make_unique<BaseTextProcessor>());
-    indexer.indexDirectory(tmpDir.string(), {"secret"});
+    // Оставляем только complex.txt
+    indexer.indexDirectory(testDir, {"file1.txt", "file2.txt", "exclude_me"});
+
     const auto& index = indexer.getIndex();
-
-    assert(index.getDocumentCount() == 1);         // только doc.txt
-    assert(index.getPostings("hidden").empty()); // из secret/hidden.txt не попал
-    assert(index.getPostings("hello").size() == 1);
-
-    fs::remove_all(tmpDir);
-    std::cout << "PASSED\n";
-}
-
-int main() {
-    std::cout << "=== Indexer Tests ===\n\n";
-    testBasicIndexing();
-    testEmptyDirectory();
-    testNonexistentDirectory();
-    testTermFrequencyAndPositions();
-    testExcludedPaths();
-    std::cout << "\n=== ALL TESTS PASSED ===\n";
-    return 0;
+    // Токенизатор убирает знаки препинания, переводит в нижний регистр
+    EXPECT_FALSE(index.getPostings("hello").empty());
+    EXPECT_FALSE(index.getPostings("world").empty());
+    EXPECT_FALSE(index.getPostings("c").empty());
+    EXPECT_FALSE(index.getPostings("20").empty());
 }

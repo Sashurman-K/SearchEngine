@@ -2,6 +2,7 @@
 #include <cmath>
 #include <algorithm>
 #include <map>
+#include <iostream>
 
 double TFIDFStrategy::calculateTFIDF(const std::string& term, int docId,
                                       const InvertedIndex& index) const
@@ -26,16 +27,21 @@ double TFIDFStrategy::calculateTFIDF(const std::string& term, int docId,
         return 0.0;
     }
 
-    double idf = std::log(static_cast<double>(totalDocs) / df);
+    double idf = std::log(1.0 + static_cast<double>(totalDocs) / df);
     return tf * idf;
 }
 
 std::vector<Result> TFIDFStrategy::rank(const QueryNode& query,
                                          const InvertedIndex& index)
 {
+    std::cout << "DEBUG TFIDF::rank: terms=" << query.terms.size()
+              << " totalDocs=" << index.getDocumentCount()
+              << " avgLen=" << index.getAvgDocLength() << "\n";
+
     std::vector<Result> results;
 
     if (query.terms.empty() || index.getDocumentCount() == 0) {
+        std::cout << "DEBUG: empty query or no docs\n";
         return results;
     }
 
@@ -43,17 +49,26 @@ std::vector<Result> TFIDFStrategy::rank(const QueryNode& query,
 
     for (const auto& term : query.terms) {
         auto postings = index.getPostings(term);
+        std::cout << "DEBUG: term='" << term << "' postings=" << postings.size() << "\n";
         for (const auto& p : postings) {
-            docScores[p.documentId] += calculateTFIDF(term, p.documentId, index);
+            double tfidf = calculateTFIDF(term, p.documentId, index);
+            std::cout << "DEBUG:   docId=" << p.documentId << " tfidf=" << tfidf << "\n";
+            docScores[p.documentId] += tfidf;
         }
     }
 
+    std::cout << "DEBUG: docScores size=" << docScores.size() << "\n";
+
     for (const auto& [docId, score] : docScores) {
         auto doc = index.getDocument(docId);
+        std::cout << "DEBUG: docId=" << docId << " score=" << score
+                  << " hasDoc=" << doc.has_value() << "\n";
         if (doc.has_value() && score > 0.0) {
             results.push_back({doc.value(), score});
         }
     }
+
+    std::cout << "DEBUG: results=" << results.size() << "\n";
 
     std::sort(results.begin(), results.end(),
         [](const Result& a, const Result& b) {

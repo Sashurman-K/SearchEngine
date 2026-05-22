@@ -1,3 +1,9 @@
+#cmake -S . -B build && cmake --build build && cd build
+#./unit_tests
+#./search_engine
+#make ./scenario_1
+
+
 cmake_minimum_required(VERSION 3.16)
 project(SearchEngine VERSION 1.0.0 LANGUAGES CXX)
 
@@ -49,16 +55,55 @@ else()
     message(WARNING "nlohmann_json not found — stopwords config will not work")
 endif()
 
-# Исполняемый файл (опционально, если main.cpp дозреет)
 if(EXISTS ${CMAKE_SOURCE_DIR}/src/main.cpp)
     add_executable(search_engine src/main.cpp)
     target_link_libraries(search_engine PRIVATE search_engine_lib)
 endif()
 
-# Тесты
-option(BUILD_TESTS "Build tests" ON)
+# Поиск пакета Google Test
+find_package(GTest REQUIRED)
+include(GoogleTest)
 
-if(BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(tests)
+# Объявление тестового исполняемого файла.
+# Указываем только файлы с самими тестами (предполагается, что они лежат в папке tests/)
+add_executable(unit_tests
+    tests/test_query_parser.cpp
+    tests/test_text_processors.cpp
+    tests/test_search_engine.cpp
+    tests/test_inverted_index.cpp
+    tests/test_ranking.cpp
+    tests/test_indexer.cpp
+)
+
+# Подключение заголовочных файлов проекта
+target_include_directories(unit_tests PRIVATE ${CMAKE_SOURCE_DIR}/include)
+
+# Линкуем тесты с вашей основной библиотекой, GTest и дополнительными зависимостями
+target_link_libraries(unit_tests
+    PRIVATE
+    search_engine_lib
+    GTest::gtest
+    GTest::gtest_main
+)
+
+# Автоматическая регистрация тестов в CTest
+gtest_discover_tests(unit_tests)
+
+add_executable(scenario_1 tests/scenarios/scenario_1.cpp)
+target_link_libraries(scenario_1 PRIVATE search_engine_lib)
+
+add_executable(scenario_2 tests/scenarios/scenario_2.cpp)
+target_link_libraries(scenario_2 PRIVATE search_engine_lib)
+
+add_executable(scenario_3 tests/scenarios/scenario_3.cpp)
+target_link_libraries(scenario_3 PRIVATE search_engine_lib)
+
+if(EXISTS "${CMAKE_SOURCE_DIR}/stopwords_config.json")
+    message(STATUS "Setting up automatic copy for stopwords_config.json")
+
+    file(COPY "${CMAKE_SOURCE_DIR}/stopwords_config.json"
+         DESTINATION "${CMAKE_BINARY_DIR}"
+    )
+else()
+    message(WARNING "stopwords_config.json not found in source directory! Auto-copy skipped.")
 endif()

@@ -7,7 +7,6 @@ private:
     double b = 0.75;   // регуляризация длины документа
 
 public:
-    // Можно задать свои параметры
     void setParameters(double k1, double b);
 
     std::vector<Result> rank(const QueryNode& query,
